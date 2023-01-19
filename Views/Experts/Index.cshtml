@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+
+}
+<div class="tablecontainer">
+    <a class="popup btn btn-primary" href="/Experts/Save/0" style="margin-bottom:20px; margin-top:20px;">Add New Employee</a>
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th>Expert ID</th>
+                <th>Expert Name</th>
+                <th>Qualification</th>
+                <th>DOB</th>
+                <th>DOJ</th>
+                <th>Hospital</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+    </table>
+
+
+    <script>
+        $(document).ready(function () {
+            $.noConflict();
+            $('#table_id').DataTable({
+                ajax: {
+                    url: 'Experts/GetExperts',
+                    type: 'GET',
+                    dataType: 'json'
+                },
+                columns: [
+                    { data: 'expertid' },
+                    { data: 'expertname' },
+                    { data: 'qualification' },
+                    { data: 'dob' },
+                    { data: 'doj' },
+                    { data: 'hospital' },
+                    { data: 'country' },
+                    { data: 'state' },
+                    { data: 'city' },
+                    {
+                        data: 'expertid', width:'50px', render: function (data) {
+                            return '<a class="popup" href="/Experts/Save/' + data + '">Edit</a>';
+                        }
+                    },
+                    {
+                        data: 'expertid', width: '50px', render: function (data) {
+                            return '<a class="popup" href="/Experts/Save/' + data + '">Delete</a>';
+                        }
+                    }
+                ]
+            })
+            $('.tablecontainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                OpenPopup($(this).attr('href'));
+            })
+            function OpenPopup(pageUrl) {
+                var $pageContent = $('<div/>');
+                $pageContent.load(pageUrl, function () {
+                    $('#popupForm', $pageContent).removeData('validator');
+                    $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+
+                });
+
+                $dialog = $('<div class="popupWindow" style="overflow:auto;"></div>')
+                    .html($pageContent)
+                    .dialog({
+                        draggable: false,
+                        autoOpen: false,
+                        resizable: false,
+                        model: true,
+                        title: 'Popup Dialog',
+                        height: 550,
+                        width: 600,
+                        close: function () {
+                            $dialog.dialog('destroy').remove();
+                        }
+                    })
+
+                $('.popupWindow').on('submit', '#popupForm', function (e) {
+                    var url = $('#popupForm')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#popupForm').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $dialog.dialog('close');
+                                oTable.ajax.reload();
+                            }
+                        }
+                    })
+
+                    e.preventDefault();
+                })
+                $dialog.dialog('open');
+            }
+        });
+    </script>
+</div>
+<style>
+    .ui-dialog {
+        background-color: #fff !important;
+        box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%) !import;
+    }
+</style>
+

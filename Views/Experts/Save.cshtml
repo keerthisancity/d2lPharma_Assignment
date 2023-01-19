@@ -1,0 +1,104 @@
+﻿@model d2lPharma_Assignment.Models.ExpertListViewModel
+@{
+    <link rel="stylesheet" type="text/css" href="~/Content/themes/base/jquery-ui.css">
+    <script type="text/javascript" charset="utf8" src="~/Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="~/Scripts/jquery-ui-1.13.2.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $('#DOB').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: '-3d'
+        });
+        $('#DOJ').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: '-3d'
+        });
+        $('#Country').on('change', function () {
+            var country = $('#Country').val();
+            var states = $("#State");
+            $.ajax({
+                type: "GET",
+                url: "Experts/Getstates",
+                data: {id:country},
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    states.empty();
+                    $.each(response, function (index, item) {
+                        states.append($("<option></option>").text(item.StateName).val(item.StateId));
+                    })
+                }
+            });
+        });
+        $('#State').on('change', function () {
+            var state = $('#State').val();
+            var cities = $("#City");
+            $.ajax({
+                type: "GET",
+                url: "Experts/Getcities",
+                data: { id: state },
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    cities.empty();
+                    $.each(response, function (index, item) {
+                        cities.append($("<option></option>").text(item.CityName).val(item.CityId));
+                    })
+                }
+            });
+        });
+    </script>
+}
+
+
+@using (Html.BeginForm("Save", "Experts", FormMethod.Post, new { id = "popupForm" }))
+{
+    if (Model != null && Model.ExpertID != 0)
+    {
+        @Html.HiddenFor(x => x.ExpertID)
+    }
+    <div class="form-group">
+        @Html.LabelFor(x => x.ExpertName)
+        @Html.TextBoxFor(x => x.ExpertName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.ExpertName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Qualification)
+        @Html.TextBoxFor(x => x.Qualification, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Qualification)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.DOB)
+        @Html.TextBoxFor(x => x.DOB, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.DOB)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.DOJ)
+        @Html.TextBoxFor(x => x.DOJ, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.DOJ)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Hospital)
+        @Html.TextBoxFor(x => x.Hospital, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Hospital)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Country)
+        @Html.DropDownListFor(x => x.Country, (IEnumerable<SelectListItem>)ViewData["Countries"], "Select Country", new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Country)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.State)
+        @Html.DropDownListFor(x => x.State, new List<SelectListItem> { new SelectListItem { Value = "0", Text = "Select State" } }, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.State)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.State)
+        @Html.DropDownListFor(x => x.City, new List<SelectListItem> { new SelectListItem { Value = "0", Text = "Select City" } }, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.State)
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+
+}
+

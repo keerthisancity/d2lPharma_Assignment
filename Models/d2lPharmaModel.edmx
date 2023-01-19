@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCity">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="StateID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblExperts">
+          <Key>
+            <PropertyRef Name="ExpertID" />
+          </Key>
+          <Property Name="ExpertID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpertName" Type="varchar" MaxLength="200" />
+          <Property Name="Qualification" Type="varchar" MaxLength="50" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="DOJ" Type="datetime" />
+          <Property Name="Hospital" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="int" />
+          <Property Name="State" Type="int" />
+          <Property Name="City" Type="int" />
+        </EntityType>
+        <EntityType Name="tblExperts_temp">
+          <Key>
+            <PropertyRef Name="ExpertID" />
+          </Key>
+          <Property Name="ExpertID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpertName" Type="varchar" MaxLength="200" />
+          <Property Name="Qualification" Type="varchar" MaxLength="50" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="DOJ" Type="datetime" />
+          <Property Name="Hospital" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="int" />
+          <Property Name="State" Type="int" />
+          <Property Name="City" Type="int" />
+        </EntityType>
+        <EntityType Name="tblState">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CountryID" Type="int" />
+        </EntityType>
+        <Association Name="FK__tblCity__StateID__0EA330E9">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="0..1" />
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblCity">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__Count__15502E78">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblExperts" Type="Self.tblExperts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="tblExperts">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__Count__2D27B809">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblExperts_temp" Type="Self.tblExperts_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="tblExperts_temp">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__State__164452B1">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="0..1" />
+          <End Role="tblExperts" Type="Self.tblExperts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblExperts">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__State__2F10007B">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="0..1" />
+          <End Role="tblExperts_temp" Type="Self.tblExperts_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblExperts_temp">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExperts__City__173876EA">
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="0..1" />
+          <End Role="tblExperts" Type="Self.tblExperts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCity">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="tblExperts">
+              <PropertyRef Name="City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExperts__City__300424B4">
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="0..1" />
+          <End Role="tblExperts_temp" Type="Self.tblExperts_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCity">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="tblExperts_temp">
+              <PropertyRef Name="City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblState__Countr__09DE7BCC">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblState" Type="Self.tblState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="tblState">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="tblCity" EntityType="Self.tblCity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblExperts" EntityType="Self.tblExperts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblExperts_temp" EntityType="Self.tblExperts_temp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblState" EntityType="Self.tblState" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblCity__StateID__0EA330E9" Association="Self.FK__tblCity__StateID__0EA330E9">
+            <End Role="tblState" EntitySet="tblState" />
+            <End Role="tblCity" EntitySet="tblCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__Count__15502E78" Association="Self.FK__tblExpert__Count__15502E78">
+            <End Role="tblCountry" EntitySet="tblCountry" />
+            <End Role="tblExperts" EntitySet="tblExperts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__Count__2D27B809" Association="Self.FK__tblExpert__Count__2D27B809">
+            <End Role="tblCountry" EntitySet="tblCountry" />
+            <End Role="tblExperts_temp" EntitySet="tblExperts_temp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__State__164452B1" Association="Self.FK__tblExpert__State__164452B1">
+            <End Role="tblState" EntitySet="tblState" />
+            <End Role="tblExperts" EntitySet="tblExperts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__State__2F10007B" Association="Self.FK__tblExpert__State__2F10007B">
+            <End Role="tblState" EntitySet="tblState" />
+            <End Role="tblExperts_temp" EntitySet="tblExperts_temp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExperts__City__173876EA" Association="Self.FK__tblExperts__City__173876EA">
+            <End Role="tblCity" EntitySet="tblCity" />
+            <End Role="tblExperts" EntitySet="tblExperts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExperts__City__300424B4" Association="Self.FK__tblExperts__City__300424B4">
+            <End Role="tblCity" EntitySet="tblCity" />
+            <End Role="tblExperts_temp" EntitySet="tblExperts_temp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblState__Countr__09DE7BCC" Association="Self.FK__tblState__Countr__09DE7BCC">
+            <End Role="tblCountry" EntitySet="tblCountry" />
+            <End Role="tblState" EntitySet="tblState" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblCity">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StateID" Type="Int32" />
+          <NavigationProperty Name="tblState" Relationship="Self.FK__tblCity__StateID__0EA330E9" FromRole="tblCity" ToRole="tblState" />
+          <NavigationProperty Name="tblExperts" Relationship="Self.FK__tblExperts__City__173876EA" FromRole="tblCity" ToRole="tblExperts" />
+          <NavigationProperty Name="tblExperts_temp" Relationship="Self.FK__tblExperts__City__300424B4" FromRole="tblCity" ToRole="tblExperts_temp" />
+        </EntityType>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblExperts" Relationship="Self.FK__tblExpert__Count__15502E78" FromRole="tblCountry" ToRole="tblExperts" />
+          <NavigationProperty Name="tblExperts_temp" Relationship="Self.FK__tblExpert__Count__2D27B809" FromRole="tblCountry" ToRole="tblExperts_temp" />
+          <NavigationProperty Name="tblStates" Relationship="Self.FK__tblState__Countr__09DE7BCC" FromRole="tblCountry" ToRole="tblState" />
+        </EntityType>
+        <EntityType Name="tblExpert">
+          <Key>
+            <PropertyRef Name="ExpertID" />
+          </Key>
+          <Property Name="ExpertID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpertName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Qualification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="DOJ" Type="DateTime" Precision="3" />
+          <Property Name="Hospital" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="Int32" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="City" Type="Int32" />
+          <NavigationProperty Name="tblCity" Relationship="Self.FK__tblExperts__City__173876EA" FromRole="tblExperts" ToRole="tblCity" />
+          <NavigationProperty Name="tblCountry" Relationship="Self.FK__tblExpert__Count__15502E78" FromRole="tblExperts" ToRole="tblCountry" />
+          <NavigationProperty Name="tblState" Relationship="Self.FK__tblExpert__State__164452B1" FromRole="tblExperts" ToRole="tblState" />
+        </EntityType>
+        <EntityType Name="tblExperts_temp">
+          <Key>
+            <PropertyRef Name="ExpertID" />
+          </Key>
+          <Property Name="ExpertID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpertName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Qualification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="DOJ" Type="DateTime" Precision="3" />
+          <Property Name="Hospital" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="Int32" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="City" Type="Int32" />
+          <NavigationProperty Name="tblCity" Relationship="Self.FK__tblExperts__City__300424B4" FromRole="tblExperts_temp" ToRole="tblCity" />
+          <NavigationProperty Name="tblCountry" Relationship="Self.FK__tblExpert__Count__2D27B809" FromRole="tblExperts_temp" ToRole="tblCountry" />
+          <NavigationProperty Name="tblState" Relationship="Self.FK__tblExpert__State__2F10007B" FromRole="tblExperts_temp" ToRole="tblState" />
+        </EntityType>
+        <EntityType Name="tblState">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryID" Type="Int32" />
+          <NavigationProperty Name="tblCities" Relationship="Self.FK__tblCity__StateID__0EA330E9" FromRole="tblState" ToRole="tblCity" />
+          <NavigationProperty Name="tblCountry" Relationship="Self.FK__tblState__Countr__09DE7BCC" FromRole="tblState" ToRole="tblCountry" />
+          <NavigationProperty Name="tblExperts" Relationship="Self.FK__tblExpert__State__164452B1" FromRole="tblState" ToRole="tblExperts" />
+          <NavigationProperty Name="tblExperts_temp" Relationship="Self.FK__tblExpert__State__2F10007B" FromRole="tblState" ToRole="tblExperts_temp" />
+        </EntityType>
+        <Association Name="FK__tblCity__StateID__0EA330E9">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="0..1" />
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblCity">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExperts__City__173876EA">
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="0..1" />
+          <End Role="tblExperts" Type="Self.tblExpert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCity">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="tblExperts">
+              <PropertyRef Name="City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExperts__City__300424B4">
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="0..1" />
+          <End Role="tblExperts_temp" Type="Self.tblExperts_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCity">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="tblExperts_temp">
+              <PropertyRef Name="City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__Count__15502E78">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblExperts" Type="Self.tblExpert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="tblExperts">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__Count__2D27B809">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblExperts_temp" Type="Self.tblExperts_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="tblExperts_temp">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblState__Countr__09DE7BCC">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblState" Type="Self.tblState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="tblState">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__State__164452B1">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="0..1" />
+          <End Role="tblExperts" Type="Self.tblExpert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblExperts">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblExpert__State__2F10007B">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="0..1" />
+          <End Role="tblExperts_temp" Type="Self.tblExperts_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblExperts_temp">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="d2hpharmaassignmentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCities" EntityType="Self.tblCity" />
+          <EntitySet Name="tblCountries" EntityType="Self.tblCountry" />
+          <EntitySet Name="tblExperts" EntityType="Self.tblExpert" />
+          <EntitySet Name="tblExperts_temp" EntityType="Self.tblExperts_temp" />
+          <EntitySet Name="tblStates" EntityType="Self.tblState" />
+          <AssociationSet Name="FK__tblCity__StateID__0EA330E9" Association="Self.FK__tblCity__StateID__0EA330E9">
+            <End Role="tblState" EntitySet="tblStates" />
+            <End Role="tblCity" EntitySet="tblCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExperts__City__173876EA" Association="Self.FK__tblExperts__City__173876EA">
+            <End Role="tblCity" EntitySet="tblCities" />
+            <End Role="tblExperts" EntitySet="tblExperts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExperts__City__300424B4" Association="Self.FK__tblExperts__City__300424B4">
+            <End Role="tblCity" EntitySet="tblCities" />
+            <End Role="tblExperts_temp" EntitySet="tblExperts_temp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__Count__15502E78" Association="Self.FK__tblExpert__Count__15502E78">
+            <End Role="tblCountry" EntitySet="tblCountries" />
+            <End Role="tblExperts" EntitySet="tblExperts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__Count__2D27B809" Association="Self.FK__tblExpert__Count__2D27B809">
+            <End Role="tblCountry" EntitySet="tblCountries" />
+            <End Role="tblExperts_temp" EntitySet="tblExperts_temp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblState__Countr__09DE7BCC" Association="Self.FK__tblState__Countr__09DE7BCC">
+            <End Role="tblCountry" EntitySet="tblCountries" />
+            <End Role="tblState" EntitySet="tblStates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__State__164452B1" Association="Self.FK__tblExpert__State__164452B1">
+            <End Role="tblState" EntitySet="tblStates" />
+            <End Role="tblExperts" EntitySet="tblExperts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblExpert__State__2F10007B" Association="Self.FK__tblExpert__State__2F10007B">
+            <End Role="tblState" EntitySet="tblStates" />
+            <End Role="tblExperts_temp" EntitySet="tblExperts_temp" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="d2hpharmaassignmentEntities">
+          <EntitySetMapping Name="tblCities">
+            <EntityTypeMapping TypeName="Models.tblCity">
+              <MappingFragment StoreEntitySet="tblCity">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCountries">
+            <EntityTypeMapping TypeName="Models.tblCountry">
+              <MappingFragment StoreEntitySet="tblCountry">
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExperts">
+            <EntityTypeMapping TypeName="Models.tblExpert">
+              <MappingFragment StoreEntitySet="tblExperts">
+                <ScalarProperty Name="ExpertID" ColumnName="ExpertID" />
+                <ScalarProperty Name="ExpertName" ColumnName="ExpertName" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="Hospital" ColumnName="Hospital" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExperts_temp">
+            <EntityTypeMapping TypeName="Models.tblExperts_temp">
+              <MappingFragment StoreEntitySet="tblExperts_temp">
+                <ScalarProperty Name="ExpertID" ColumnName="ExpertID" />
+                <ScalarProperty Name="ExpertName" ColumnName="ExpertName" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="Hospital" ColumnName="Hospital" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStates">
+            <EntityTypeMapping TypeName="Models.tblState">
+              <MappingFragment StoreEntitySet="tblState">
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

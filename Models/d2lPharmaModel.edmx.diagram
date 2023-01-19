@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="424d63bcadad43138fb7eea269925302" Name="Diagram1">
+        <EntityTypeShape EntityType="Models.tblCity" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.tblCountry" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.tblExpert" Width="1.5" PointX="7.5" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.tblExperts_temp" Width="1.5" PointX="10.5" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.tblState" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <AssociationConnector Association="Models.FK__tblCity__StateID__0EA330E9" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK__tblExperts__City__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK__tblExperts__City__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK__tblExpert__Count__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK__tblExpert__Count__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK__tblState__Countr__09DE7BCC" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK__tblExpert__State__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK__tblExpert__State__2F10007B" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
