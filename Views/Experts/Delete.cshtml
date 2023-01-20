@@ -1,0 +1,51 @@
+﻿@model d2lPharma_Assignment.Models.ExpertListViewModel
+@using (Html.BeginForm("Delete", "Experts", FormMethod.Post, new { id = "popupForm" }))
+{
+    if (Model != null && Model.ExpertID != 0)
+    {
+        @Html.HiddenFor(x => x.ExpertID)
+    }
+    <div class="form-group">
+        @Html.LabelFor(x => x.ExpertName)
+        <p>@Model.ExpertName</p>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Qualification)
+        <p>@Model.Qualification</p>
+        
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.DOB)
+        <p>@Model.DOB</p>
+        
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.DOJ)
+        <p>@Model.DOJ</p>
+        
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Hospital)
+        <p>@Model.Hospital</p>
+        
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Country)
+        <p>@Model.Country</p>
+        
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.State)
+        <p>@Model.State</p>
+        
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.City)
+        <p>@Model.City</p>
+        
+    </div>
+    <div>
+        <input type="submit" value="Delete" />
+    </div>
+
+}

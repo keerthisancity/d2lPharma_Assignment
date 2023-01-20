@@ -359,6 +359,7 @@
     <Content Include="Views\Experts\Index.cshtml" />
     <Content Include="Views\Experts\Save.cshtml" />
     <Content Include="Views\Experts\Index_mvc.cshtml" />
+    <Content Include="Views\Experts\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

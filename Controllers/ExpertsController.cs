@@ -113,7 +113,7 @@ namespace d2lPharma_Assignment.Controllers
         [HttpPost]
         public ActionResult Save(ExpertListViewModel expert)
         {
-
+            bool status = false;
             if (ModelState.IsValid)
             {
                 using (d2hpharmaassignmentEntities entity = new d2hpharmaassignmentEntities())
@@ -134,6 +134,7 @@ namespace d2lPharma_Assignment.Controllers
                         };
                         entity.tblExperts.Add(newExpert);
                         entity.SaveChanges();
+                        status = true;
                     }
                     else
                     {
@@ -147,28 +148,56 @@ namespace d2lPharma_Assignment.Controllers
                         updateExpert.State = Convert.ToInt32(expert.State);
                         updateExpert.City = Convert.ToInt32(expert.City);
                         entity.SaveChanges();
+                        status = true;
                     }
                 };
 
             }
-            return RedirectToAction("Index");
+            return new JsonResult { Data = new { status = status } };
         }
-        //[HttpGet]
-        //public ActionResult Delete(int id)
-        //{
-        //    using (d2hpharmaassignmentEntities entity = new d2hpharmaassignmentEntities())
-        //    {
-        //        var expert = entity.tblExperts.Where(x => x.ExpertID == id).FirstOrDefault();
-        //        if(expert != null)
-        //        {
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            using (d2hpharmaassignmentEntities entity = new d2hpharmaassignmentEntities())
+            {
+                var experts = (from expert in entity.tblExperts
+                               join county in entity.tblCountries on expert.Country equals county.CountryID
+                               join state in entity.tblStates on expert.State equals state.StateID
+                               join city in entity.tblCities on expert.City equals city.CityID
+                               where expert.ExpertID == id
+                               select new ExpertListViewModel
+                               {
+                                   ExpertID = expert.ExpertID,
+                                   ExpertName = expert.ExpertName,
+                                   Qualification = expert.Qualification,
+                                   DOB = expert.DOB,
+                                   DOJ = expert.DOJ,
+                                   Hospital = expert.Hospital,
+                                   Country = county.CountryName,
+                                   State = state.StateName,
+                                   City = city.CityName
+                               }).FirstOrDefault();
 
-        //            return View(v);
-        //        }
-        //        else
-        //        {
-        //            return HttpNotFound();
-        //        }
-        //    }
-        //}
+                return View(experts);
+            }
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteEmployee(int id)
+        {
+
+            bool status = false;
+            using (d2hpharmaassignmentEntities entity = new d2hpharmaassignmentEntities())
+            {
+                var item = entity.tblExperts.Where(x => x.ExpertID == id).FirstOrDefault();
+                if (item != null)
+                {
+                    entity.tblExperts.Remove(item);
+                    entity.SaveChanges();
+                    status = true;
+                }
+            }
+            return new JsonResult { Data = new { status = status } };
+        }
     }
 }

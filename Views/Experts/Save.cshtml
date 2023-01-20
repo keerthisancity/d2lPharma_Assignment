@@ -92,7 +92,7 @@
         @Html.ValidationMessageFor(a => a.State)
     </div>
     <div class="form-group">
-        @Html.LabelFor(x => x.State)
+        @Html.LabelFor(x => x.City)
         @Html.DropDownListFor(x => x.City, new List<SelectListItem> { new SelectListItem { Value = "0", Text = "Select City" } }, new { @class = "form-control" })
         @Html.ValidationMessageFor(a => a.State)
     </div>
@@ -101,4 +101,9 @@
     </div>
 
 }
+<style>
+    .field-validation-error {
+        color:red;
+    }
+</style>
 

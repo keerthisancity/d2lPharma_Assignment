@@ -1,4 +1,7 @@
-﻿use d2hpharmaassignment
+﻿Create Database d2hpharmaassignment
+ --Begin Step 1
+ --Create table Expert with ExpertID (IDENTITY column), Expert Name, Qualification, DOB, DOJ, Hospital, Country, State, City.
+use d2hpharmaassignment
 Go
 Create table tblCountry(
 	CountryID int primary key identity(1,1),
@@ -35,14 +38,17 @@ Go
 Insert into tblCity Values('Anantapuram',1),('Amaravathi',1),('Vizag',1),('Kurnool',1),('Tirupathi',1),('Chittor',1),('East Godavari',1)
 Insert into tblCity Values('Bangalore',1),('Mysore',1),('Tumkur',1),('Mangalore',1),('Coorg',1),('Davanagere',1),('Bidar',1)
 Go
---Select * into tblExperts_Temp from tblExperts 
+--End
+
+--Begin Step 2
+--Select * into tblExperts_Temp from tblExperts --- We can use this approach but it will not add constrains
 CREATE TABLE [dbo].[tblExperts_temp](
 	[ExpertID] [int] IDENTITY(1,1) NOT NULL,
 	[ExpertName] [varchar](200) NULL,
 	[Qualification] [varchar](50) NULL,
 	[DOB] [datetime] NULL,
 	[DOJ] [datetime] NULL,
-	[Hospital] [int] NULL,
+	[Hospital] Varchar(200) NULL,
 	[Country] [int] NULL,
 	[State] [int] NULL,
 	[City] [int] NULL,
@@ -64,7 +70,6 @@ GO
 ALTER TABLE [dbo].[tblExperts_temp]  WITH CHECK ADD FOREIGN KEY([City])
 REFERENCES [dbo].[tblCity] ([CityID])
 GO
-
 
 Insert into tblExperts_temp Values('	Expert 1	 ','MBBS','1993/02/21','2021/01/01','Apollo',6,1,1)
 Insert into tblExperts_temp Values('	Expert 2	 ','MBBS MS','1981/03/30','2020/05/23','People Tree',6,1,3)
@@ -216,9 +221,9 @@ Insert into tblExperts_temp Values('	Expert 147	 ','MD','1983/01/01','2019/05/05
 Insert into tblExperts_temp Values('	Expert 148	 ','MBBS','1993/02/21','2021/01/01','Apollo',6,1,1)
 Insert into tblExperts_temp Values('	Expert 149	 ','MBBS MS','1981/03/30','2020/05/23','People Tree',6,1,3)
 Insert into tblExperts_temp Values('	Expert 150	 ','MD','1983/01/01','2019/05/05','Seven Hills',6,1,4)
+--End
 
-
-Select * from tblExperts_temp
+--Begin Step 3
 
 Insert into tblExperts(ExpertName,Qualification,DOB,DOJ,Hospital,Country,State,City)
 Select ExpertName,Qualification,DOB,DOJ,Hospital,Country,State,City from tblExperts_temp
